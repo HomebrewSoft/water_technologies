@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="sequence_view" model="ir.ui.view">
+            <field name="model">ir.sequence</field>
+            <field name="arch" type="xml">
+                <form string="Secuencias">
+                  <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="active" groups="base.group_no_one"/>
+                    </group>
+                    <notebook>
+                    <page string="Secuencias">
+                        <group col="4">
+                            <field name="prefix"/>
+                            <field name="suffix"/>
+                            <field name="padding"/>
+                            <field name="number_increment"/>
+                            <field name="number_next_actual"/>
+                        </group>
+                    </page>
+                    </notebook>
+                   </sheet>
+                </form>
+            </field>
+           
+        </record>
+        <record id="sequence_view_tree" model="ir.ui.view">
+            <field name="model">ir.sequence</field>
+            <field name="arch" type="xml">
+                <tree string="Sequences">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="prefix"/>
+                    <field name="padding"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="number_next_actual"/>
+                    <field name="number_increment"/>
+                    <field name="implementation"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_sequence_search" model="ir.ui.view">
+            <field name="model">ir.sequence</field>
+            <field name="arch" type="xml">
+                <search string="Secuencias">
+                    <field name="name" string="Sequence"/>
+                    <field name="code"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </search>
+            </field>
+        </record>
+    
+         <record id="ir_sequence_form" model="ir.actions.act_window">
+            <field name="name">Sequences</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.sequence</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="sequence_view_tree"/>
+            <field name="context">{'active_test': False}</field>
+        </record>
+        
+        <record id="sequence_type_form_view" model="ir.ui.view">
+            <field name="model">ir.sequence.type</field>
+            <field name="arch" type="xml">
+                <form string="Tipo de secuencia">
+                  <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                   </sheet> 
+                </form>
+            </field>
+        </record>
+        <record id="view_sequence_type_search" model="ir.ui.view">
+            <field name="model">ir.sequence.type</field>
+            <field name="arch" type="xml">
+                <search string="Tipo de secuencia">
+                    <field name="name" filter_domain="['|', ('name','ilike',self), ('code','ilike',self)]" string="Sequence Type"/>
+                </search>
+            </field>
+        </record>
+        <record id="ir_sequence_type" model="ir.actions.act_window">
+            <field name="name">Códigos de secuencia</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.sequence.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+        </record>
+
+        <menuitem id="menu_edit_sequence" parent="account.menu_finance" name="Secuencias" sequence="2"/>
+        <menuitem id="menu_ir_sequence_form" action="ir_sequence_form" parent="menu_edit_sequence" name="Editar secuencia de factura" sequence="1"/>
+
+    </data>
+</openerp>

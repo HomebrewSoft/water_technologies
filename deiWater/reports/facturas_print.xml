@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <report
+        id="formato_factura_print"
+        model="account.invoice"
+        string="Factura SAR"
+        name="deiWater.facturas_print_view_document"
+        file="deiWater.facturas_print_view_document"
+        report_type="qweb-pdf" />
+</data>
+</openerp>
+

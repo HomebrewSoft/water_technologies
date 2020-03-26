@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <report
+        id="formato_factura_print3"
+        model="account.invoice"
+        string="Factura Preimpresa Bodega"
+        name="deiWater.facturas_print_view_document3"
+        file="deiWater.facturas_print_view_document3"
+        report_type="qweb-pdf" />
+</data>
+</openerp>
+

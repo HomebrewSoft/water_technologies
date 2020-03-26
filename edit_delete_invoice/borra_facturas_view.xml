@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="invoice_form_delete_inherit" model="ir.ui.view">
+            <field name="name">invoice.form.delete.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='invoice_cancel']" position="after">
+                    <button name="unlink" type="object" class="oe_highlight" confirm="¿Desea borrar esta factura?" string="Borrar factura" />
+                </xpath>                   
+            </field>
+        </record>
+
+        <record id="invoice_form_editnumber_inherit" model="ir.ui.view">
+            <field name="name">invoice.form.editnumber.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='number']" position="replace">
+                     <field name="number" readonly="0" class="oe_inline"/>   
+                 </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_form_editcustomer_inherit" model="ir.ui.view">
+            <field name="name">invoice.form.editcustomer.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='partner_id']" position="attributes">
+                   <attribute name="attrs">{'readonly': [['state', '=', ['draft']]]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_form_editdate_inherit" model="ir.ui.view">
+            <field name="name">invoice.form.editdate.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='date_invoice']" position="attributes">
+                    <attribute name="attrs">{'readonly': [['state', '=', ['draft']]]}</attribute>
+                 </xpath>
+            </field>
+        </record>
+
+        <record id="invoice_form_editline_inherit" model="ir.ui.view">
+            <field name="name">invoice.form.editline.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='invoice_line']" position="attributes">
+                    <attribute name="attrs">{'readonly': [['state', '=', ['draft']]]}</attribute>
+                 </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

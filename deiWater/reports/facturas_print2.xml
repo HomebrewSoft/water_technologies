@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <report
+        id="formato_factura_print2"
+        model="account.invoice"
+        string="Factura Preimpresa"
+        name="deiWater.facturas_print_view_document2"
+        file="deiWater.facturas_print_view_document2"
+        report_type="qweb-pdf" />
+</data>
+</openerp>
+
