@@ -170,6 +170,9 @@
     </tr> 
 -->
 <br/><br/>
+<t t-set="acumulador" t-value="0"/>
+<t t-set="gravado" t-value="0"/>
+<t t-set="exenta" t-value="0"/>
 <table id="mainTable" class="shadow rounded">
     <tr class="first-table-header">
         <th colspan="2">vendedor</th>
@@ -181,12 +184,12 @@
         <th colspan="1" style="border-right: none;">pag</th>
     </tr>
     <tr>
-        <td colspan="2">asd</td>
+        <td colspan="2"><span t-field="o.user_id.name"/></td>
         <td colspan="1">asd</td>
         <td colspan="1">asd</td>
         <td colspan="2">asd</td>
         <td colspan="2">asd</td>
-        <td colspan="1">asd</td>
+        <td colspan="1"><span t-field="o.date_invoice"/></td>
         <td colspan="1">asd</td>
     </tr>
     <tr class="second-table-header">
@@ -199,25 +202,39 @@
         <th colspan="1">total</th>
         <th colspan="1">isv</th>
     </tr>
-    <tr>
+    <tr t-foreach="o.invoice_line" t-as="l">
+        <t t-if="l.invoice_line_tax_id">
+            <t t-set="gravado" t-value="gravado + l.price_subtotal"/>
+        </t>
+        <t t-if="not(l.invoice_line_tax_id)">
+            <t t-set="exenta" t-value="exenta + l.price_subtotal"/>
+        </t>
+        <t t-set="acumulador" t-value="acumulador + l.price_subtotal" />
+        <td colspan="1"><span t-field="l.quantity"/></td>
+        <td colspan="1"><span t-field="l.product_id.default_code"/></td>
+        <td colspan="3">
+            <t t-if="l.product_id.name is False ">
+                    <span t-field="l.name"/>
+            </t>
+            <t t-if="l.product_id.name is not False ">
+                    <span t-field="l.product_id.name"/>
+            </t>
+        </td>
+        <td colspan="1"><span t-field="l.price_unit"/></td>
         <td colspan="1">asd</td>
-        <td colspan="1">asd</td>
-        <td colspan="3">asd</td>
-        <td colspan="1">asd</td>
-        <td colspan="1">asd</td>
-        <td colspan="1">asd</td>
-        <td colspan="1">asd</td>
+        <td colspan="1"><span t-field="l.discount"/></td>
+        <td colspan="1"><span t-field="l.price_subtotal"/></td>
         <td colspan="1">asd</td>
     </tr>
     <tr>
-        <td colspan="1"> </td>
-        <td colspan="1"> </td>
-        <td colspan="3"> </td>
-        <td colspan="1"> </td>
-        <td colspan="1"> </td>
+        <td colspan="1"></td>
+        <td colspan="1"></td>
+        <td colspan="3"></td>
+        <td colspan="1"></td>
+        <td colspan="1"></td>
         <td colspan="1">Total L.</td>
-        <td colspan="1"> </td>
-        <td colspan="1"> </td>
+        <td colspan="1"><span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(acumulador)"/> </td>
+        <td colspan="1"></td>
     </tr>
     <tr>
         <td class="table-footer" rowspan="5" colspan="5">
@@ -236,36 +253,46 @@
             </div>
         </td>
         <td class="table-footer" colspan="2">Importe Exonerado L.</td>
-        <td class="table-footer" colspan="3">1</td>
+        <td class="table-footer" colspan="3">
+            <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+        </td>
     </tr>
     <tr>
         <td class="table-footer" colspan="2">Importe Exento L.</td>
-        <td class="table-footer" colspan="3">2</td>
+        <td class="table-footer" colspan="3">
+            <span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(exenta)"/>
+        </td>
     </tr>
     <tr>
         <td class="table-footer" colspan="2">Importe Gravado 15% L.</td>
-        <td class="table-footer" colspan="3">3</td>
+        <td class="table-footer" colspan="3">
+            <span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(gravado)"/> 
+        </td>
     </tr>
     <tr>
         <td class="table-footer" colspan="2">I.S.V. 15% L.</td>
-        <td class="table-footer" colspan="3">4</td>
+        <td class="table-footer" colspan="3">
+            <span t-field="o.amount_tax" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+        </td>
     </tr>
     <tr>
         <td class="table-footer" colspan="2">TOTAL A PAGAR L.</td>
-        <td class="table-footer" colspan="3">5</td>
+        <td class="table-footer" colspan="3">
+            <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+        </td>
     </tr>
     <tr>
         <td class="table-footer" colspan="10" style="font-weight: bolder;">
-            Total en Letras: sdasd
+            Total en Letras: <span t-field="o.amount_total_text" />
         </td>
     </tr>
 </table>
 
 <div class="end">
     <div class="text" style="font-weight: bolder;">Datos del adquiriente exonerado</div><br/>
-    <div class="text">Número correlativo de la orden de compra:</div><div style="width:60%; border-bottom: 1px solid black; display: inline-block; white-space: pre;" /> <br/>
-    <div class="text">Número correlativo delregistro de exonerado:</div><div style="width:60%; border-bottom: 1px solid black; display: inline-block;" /> <br/>
-    <div class="text">Número identificativo de la SAG:</div><div style="width:60%; border-bottom: 1px solid black; display: inline-block;" /> <br/>
+    <div class="text">Número correlativo de la orden de compra:</div><span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_orden_exenta" /> <br/>
+    <div class="text">Número correlativo delregistro de exonerado:</div><span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_correlativo_constancia_exonerado" /> <br/>
+    <div class="text">Número identificativo de la SAG:</div><span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_identificacion_sag" /> <br/>
 </div>
 
 </div>
