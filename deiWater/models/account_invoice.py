@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api, _
-import time
 from openerp.exceptions import except_orm, Warning, RedirectWarning
+
+import time
 from itertools import ifilter
+
+
 class account_invoice(models.Model):
     _inherit = "account.invoice"
 
-    #Nuevos requerimientos
+    # Nuevos requerimientos
     numero_orden_exenta = fields.Char("N° Correlativo de orden de compra exenta")
     numero_correlativo_constancia_exonerado = fields.Char("N° Correlativo de constancia de registro exonerado")
     numero_identificacion_sag = fields.Char("N° Identificativo del registro de la SAG:")
@@ -16,10 +19,16 @@ class account_invoice(models.Model):
     min_number_shot = fields.Char("min_number", readonly=True)
     max_number_shot = fields.Char("max_number", readonly=True)
 
-    amount_total_text = fields.Char("Amount Total", compute = 'get_totalt', default='Cero')
+    amount_total_text = fields.Char("Amount Total", compute='get_totalt', default='Cero')
+    send_via = fields.Char(
+    )
+    date_shipping = fields.Date(
+    )
+    pag = fields.Char(
+    )
 
     _sql_constraints = [
-    ('number', 'unique(number)', 'the invoice number must be unique, see sequence settings in the selected journal!')
+        ('number', 'unique(number)', 'the invoice number must be unique, see sequence settings in the selected journal!')
     ]
 
     @api.depends("invoice_line", "invoice_line.discount", "invoice_line.quantity")
@@ -35,26 +44,26 @@ class account_invoice(models.Model):
         res = super(account_invoice, self).invoice_validate()
         if self.journal_id.sequence_id.fiscal_regime:
             if self.date_invoice > self.journal_id.sequence_id.expiration_date:
-                self.journal_id.sequence_id.number_next_actual = self.journal_id.sequence_id.number_next_actual -1
-                raise Warning(_('la fecha de expiracion para esta secuencia es %s ') %(self.journal_id.sequence_id.expiration_date) )
+                self.journal_id.sequence_id.number_next_actual = self.journal_id.sequence_id.number_next_actual - 1
+                raise Warning(_('la fecha de expiracion para esta secuencia es %s ') % (self.journal_id.sequence_id.expiration_date))
             self.cai_shot = ''
 
             for regimen in self.journal_id.sequence_id.fiscal_regime:
                 if regimen.selected:
                     self.cai_shot = regimen.cai.name
                     self.cai_expires_shot = regimen.cai.expiration_date
-                    self.min_number_shot = self.journal_id.sequence_id.dis_min_value#regimen.desde
-                    self.max_number_shot = self.journal_id.sequence_id.dis_max_value#regimen.hasta			
+                    self.min_number_shot = self.journal_id.sequence_id.dis_min_value  # regimen.desde
+                    self.max_number_shot = self.journal_id.sequence_id.dis_max_value  # regimen.hasta
         return res
 
     @api.one
     @api.depends('journal_id')
     def get_totalt(self):
-        self.amount_total_text =''
+        self.amount_total_text = ''
         if self.currency_id:
-            self.amount_total_text = self.to_word(self.amount_total,self.currency_id.name)
+            self.amount_total_text = self.to_word(self.amount_total, self.currency_id.name)
         else:
-            self.amount_total_text = self.to_word(self.amount_total,self.user_id.company_id.currency_id.name)
+            self.amount_total_text = self.to_word(self.amount_total, self.user_id.company_id.currency_id.name)
         return True
 
     def to_word(self, number, mi_moneda):
@@ -107,7 +116,7 @@ class account_invoice(models.Model):
             'OCHOCIENTOS ',
             'NOVECIENTOS '
         )
-        
+
         MONEDAS = (
             {'country': u'Colombia', 'currency': 'COP', 'singular': u'PESO COLOMBIANO', 'plural': u'PESOS COLOMBIANOS', 'symbol': u'$'},
             {'country': u'Honduras', 'currency': 'HNL', 'singular': u'Lempira', 'plural': u'Lempiras', 'symbol': u'L'},
@@ -158,7 +167,6 @@ class account_invoice(models.Model):
             converted += "con %2i/100 " % centavos
         converted += moneda
         return converted.title()
-
 
     def convert_group(self, n):
         UNIDADES = (
@@ -235,10 +243,9 @@ class account_invoice(models.Model):
         return output
 
     def addComa(self, snum):
-        s = snum;
-        i = s.index('.') # Se busca la posición del punto decimal
+        s = snum
+        i = s.index('.')  # Se busca la posición del punto decimal
         while i > 3:
             i = i - 3
             s = s[:i] + ',' + s[i:]
         return s
-

@@ -27,7 +27,7 @@
         </div>
         <br/>
         <div class="header-footer">
-            <div class="bold">RTN: <span t-field="o.company_id.company_registry"/></div>
+            <div class="bold">RTN # <span t-field="o.company_id.company_registry"/></div>
             <div class="bold">Fecha de Vencimiento: <span t-field="o.cai_expires_shot"/></div>
             <div class="bold">
                 Rango Autorizado: <span t-field="o.min_number_shot"/> AL <span t-field="o.max_number_shot" /><br/>
@@ -72,103 +72,7 @@
         </div>
     </div>
 </div>
-<!-- <tr>
-    <td style="width:25%;">
-        <strong>Fecha:</strong> 
-           <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>
-    </td>
-    <td style="width:25%;" class="text-left">
-        <strong>Comercial/Vendedor:</strong>
-    </td>
-    <td style="width:25%;" class="text-center">
-       <strong>Condiciones de Pago:</strong> 
-    </td>
-    <td style="width:25%;">
-     </td> 
-</tr>
-<tr>
-    <td style="width:25%;">
-        <span t-field="o.date_invoice"/>
-    </td>
-    <td style="width:25%;" class="text-left">
-            <span t-field="o.user_id.name"/>
-    </td>
-    <td style="width:25%;" class="text-center">
-        <span t-field="o.payment_term.name"/>
-    </td>
-      <td style="width:5%;">
-     </td> 
-</tr>
-<br/>
-    <tr>
-        <td style="width:35%;">
-             <br/>
-        </td>
-        <td style="width:25%;" class="text-left">
-              <br/>
-        </td>
-        <td style="width:25%;" class="text-center">
-             <br/>
-        </td>
-        <td style="width:5%;">
-        </td> 
-    </tr>
-    <tr>
-        <td style="width:35%;">
-            <strong>Cliente:</strong> 
-               <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>
-        </td>
-        <td style="width:25%;" class="text-left">
-            <strong>Tel:</strong>
-        </td>
-        <td style="width:25%;" class="text-center">
-           <strong class="text-center">RTN:</strong> 
-        </td>
-         <td style="width:5%;">
-        </td> 
-    </tr>
-    <tr>
-        <td style="width:35%;">
-             <span t-field="o.partner_id.name"/>
-        </td>
-        <td style="width:25%;" class="text-left">
-           <span t-field="o.partner_id.phone"/>
-        </td>
-        <td style="width:25%;" class="text-center">
-           <span t-field="o.partner_id.rtn"/> 
-        </td>
-         <td style="width:5%;">
-        </td> 
-    </tr>
-    <tr>
-        <td style="width:35%;">
-              <br/>
-            <strong>Dirección:</strong> 
-               <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>
-        </td>
-        <td style="width:25%;" class="text-left">
-             <br/>
-        </td>
-        <td style="width:25%;" class="text-center">
-             <br/>
-        </td>
-         <td style="width:5%;">
-        </td> 
-    </tr>
-    <tr>
-        <td style="width:35%;">
-              <span t-field="o.partner_id.street"/> 
-        </td>
-        <td style="width:25%;" class="text-left">
-          
-        </td>
-        <td style="width:25%;" class="text-center">
-       
-        </td>
-        <td style="width:5%;">
-        </td> 
-    </tr> 
--->
+
 <br/><br/>
 <t t-set="acumulador" t-value="0"/>
 <t t-set="gravado" t-value="0"/>
@@ -185,12 +89,12 @@
     </tr>
     <tr>
         <td colspan="2"><span t-field="o.user_id.name"/></td>
-        <td colspan="1">asd</td>
-        <td colspan="1">asd</td>
-        <td colspan="2">asd</td>
-        <td colspan="2">asd</td>
+        <td colspan="1"><span t-field="o.origin"/></td>
+        <td colspan="1"><span t-field="o.send_via"/></td>
+        <td colspan="2"><span t-field="o.date_shipping"/></td>
+        <td colspan="2"><span t-field="o.comment"/></td>
         <td colspan="1"><span t-field="o.date_invoice"/></td>
-        <td colspan="1">asd</td>
+        <td colspan="1"><span t-field="o.pag"/></td>
     </tr>
     <tr class="second-table-header">
         <th colspan="1">ctd</th>
@@ -210,7 +114,7 @@
             <t t-set="exenta" t-value="exenta + l.price_subtotal"/>
         </t>
         <t t-set="acumulador" t-value="acumulador + l.price_subtotal" />
-        <td colspan="1"><span t-field="l.quantity"/></td>
+        <td class="txt-right" colspan="1"><span t-field="l.quantity"/></td>
         <td colspan="1"><span t-field="l.product_id.default_code"/></td>
         <td colspan="3">
             <t t-if="l.product_id.name is False ">
@@ -220,11 +124,11 @@
                     <span t-field="l.product_id.name"/>
             </t>
         </td>
-        <td colspan="1"><span t-field="l.price_unit"/></td>
-        <td colspan="1">asd</td>
-        <td colspan="1"><span t-field="l.discount"/></td>
-        <td colspan="1"><span t-field="l.price_subtotal"/></td>
-        <td colspan="1">asd</td>
+        <td class="txt-right" colspan="1"><span t-field="l.price_unit"/></td>
+        <td colspan="1"><span t-field="l.product_id.uom_id"/></td>
+        <td class="txt-right" colspan="1"><span t-esc="'{0:,.2f}'.format((1- l.discount / 100) * l.price_unit * l.quantity)"/></td>
+        <td class="txt-right" colspan="1"><span t-field="l.price_subtotal"/></td>
+        <td class="txt-right" colspan="1"><span t-esc="'{0:,.2f}'.format(l.isv)"/></td>
     </tr>
     <tr>
         <td colspan="1"></td>
@@ -233,7 +137,7 @@
         <td colspan="1"></td>
         <td colspan="1"></td>
         <td colspan="1">Total L.</td>
-        <td colspan="1"><span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(acumulador)"/> </td>
+        <td class="txt-right" colspan="1"><span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(acumulador)"/> </td>
         <td colspan="1"></td>
     </tr>
     <tr>
@@ -246,38 +150,38 @@
                 </div><br/><br/><br/>
                 <div style="text-align: center; width:100%; display: inline-block;">
                     <div style="border-bottom: 1px solid black; white-space: pre; margin-left: 40px; margin-right: 40px;" /><br/>
-                    <div style="font-weight: bold; font-size: 10px; width:100%; display: inline-block;">Firma</div>
+                    <div style="text-transform: uppercase; font-weight: bold; font-size: 10px; width:100%; display: inline-block;">Firma</div>
                     <div style="font-weight: bold; font-size: 7px; font-style: italic; width:100%; display: inline-block;">Esta Factura no es comprobante de Pago, Exija su corespondiente Recibo de Caja</div>
                     <div style="font-weight: bold; font-size: 9px; font-style: italic; width:100%; display: inline-block;" >La Factura es beneficio de Todos ¡Exijala!</div>
                 </div>
             </div>
         </td>
-        <td class="table-footer" colspan="2">Importe Exonerado L.</td>
-        <td class="table-footer" colspan="3">
+        <td class="table-footer txt-right" colspan="2">Importe Exonerado L.</td>
+        <td class="table-footer txt-right" colspan="3">
             <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
         </td>
     </tr>
     <tr>
-        <td class="table-footer" colspan="2">Importe Exento L.</td>
-        <td class="table-footer" colspan="3">
+        <td class="table-footer txt-right" colspan="2">Importe Exento L.</td>
+        <td class="table-footer txt-right" colspan="3">
             <span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(exenta)"/>
         </td>
     </tr>
     <tr>
-        <td class="table-footer" colspan="2">Importe Gravado 15% L.</td>
-        <td class="table-footer" colspan="3">
+        <td class="table-footer txt-right" colspan="2">Importe Gravado 15% L.</td>
+        <td class="table-footer txt-right" colspan="3">
             <span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(gravado)"/> 
         </td>
     </tr>
     <tr>
-        <td class="table-footer" colspan="2">I.S.V. 15% L.</td>
-        <td class="table-footer" colspan="3">
+        <td class="table-footer txt-right" colspan="2">I.S.V. 15% L.</td>
+        <td class="table-footer txt-right" colspan="3">
             <span t-field="o.amount_tax" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
         </td>
     </tr>
     <tr>
-        <td class="table-footer" colspan="2">TOTAL A PAGAR L.</td>
-        <td class="table-footer" colspan="3">
+        <td class="table-footer txt-right" colspan="2">TOTAL A PAGAR L.</td>
+        <td class="table-footer txt-right" colspan="3">
             <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
         </td>
     </tr>
@@ -289,7 +193,7 @@
 </table>
 
 <div class="end">
-    <div class="text" style="font-weight: bolder;">Datos del adquiriente exonerado</div><br/>
+    <div class="text" style="font-size: 16px;">Datos del adquiriente exonerado</div><br/>
     <div class="text">Número correlativo de la orden de compra:</div><span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_orden_exenta" /> <br/>
     <div class="text">Número correlativo delregistro de exonerado:</div><span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_correlativo_constancia_exonerado" /> <br/>
     <div class="text">Número identificativo de la SAG:</div><span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_identificacion_sag" /> <br/>
