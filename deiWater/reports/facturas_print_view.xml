@@ -5,31 +5,16 @@
 <t t-call="report.html_container">
 <t t-foreach="docs" t-as="o">
 <div class="header">
-<div class="row">  
-    <table style="width:100%;">
-        <tr>
-        <td style="width:30%;" class="text-left" >
+    <link href="/deiWater/static/src/css/facturas_print_view.css" rel="stylesheet" />
+    <div class="container">
+        <div class="company-info">
+            <img class="logo-img" t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" /><br/>
+            <span t-field="o.company_id.street"/>, <span t-field="o.company_id.street2"/>,<br/>
+            <span t-field="o.company_id.city"/>, <span t-field="o.company_id.country_id.name"/> - Email: <span t-field="o.company_id.email"/><br/>
+            Telefono: <span t-field="o.company_id.phone"/> 
+        </div>
         
-        <p style="text-align: center; font-size:12px;"  >
-
-        <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="width:200px;height:90px;"/>
-
-           <br/>   
-            <span t-field="o.company_id.street"/>,
-            <span t-field="o.company_id.street2"/>.
-            <span t-field="o.company_id.city"/> ,
-            <span t-field="o.company_id.country_id.name"/>
-            <br/>
-            Telefono: <span t-field="o.company_id.phone"/>, Email:<span t-field="o.company_id.email"/>
-            <br/>
-            RTN: <span t-field="o.company_id.company_registry"/> 
-          
-          </p>
-
-        </td>
-        
-        <td style="width:40%;">
-        <h4 class="text-right" style="font-weight:bold;">
+        <div class="bill-info" >
             <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">FACTURA</span>
             <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
             <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Factura borrador</span>
@@ -37,21 +22,19 @@
             <span t-if="o.type == 'out_refund'">NOTA DE CREDITO</span>
             <span t-if="o.type == 'in_refund'">Devolución</span>
             <span t-if="o.type == 'in_invoice'">Factura</span>
-            : <span t-field="o.number"/>
-        </h4>
-        <p style="color: #27AE60; font-size:10px;" class="text-right">
-          CAI: <span t-field="o.cai_shot"/>
-          <br/>
-          Fecha de Vencimiento: <span t-field="o.cai_expires_shot"/>
-          <br/>
-          Rango Autorizado:  
-          <span t-field="o.min_number_shot"> </span> a <span t-field="o.max_number_shot"> </span>   
-           <br/>
-        </p>
-        </td>
-        </tr>
-    </table>
-</div>  
+            <br/>
+            No. <span id="billNumber" t-field="o.number"/>
+        </div>
+        <br/>
+        <div class="header-footer">
+            <div class="bold">RTN: <span t-field="o.company_id.company_registry"/></div>
+            <div class="bold">Fecha de Vencimiento: <span t-field="o.cai_expires_shot"/></div>
+            <div class="bold">
+                Rango Autorizado: <span t-field="o.min_number_shot"/> AL <span t-field="o.max_number_shot" /><br/>
+                CAI: <span t-field="o.cai_shot"/>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--FOOTER- PIE DE PAGINA-->
@@ -66,12 +49,33 @@
 </div>
 -->
 
-<div class="page">   
-<table style="font-size:12px; width:100%;">
-<tr>
+<div class="page">
+<link href="/deiWater/static/src/css/facturas_print_view.css" rel="stylesheet" />
+<div class="client-info rounded shadow">
+    <div class="col-ci">
+        <div class="row-ci">
+            Cliente: <span t-field="o.partner_id.name"/>
+        </div><br/>
+        <div class="row-ci">
+            RTN Cliente: <span t-field="o.partner_id.rtn"/> 
+        </div>
+    </div>
+    <div class="col-ci">
+        <div class="row-ci">
+            Teléfono: <span t-field="o.partner_id.phone"/>
+        </div><br/>
+        <div class="row-ci">
+            Contacto: 
+        </div><br/>
+        <div class="row-ci">
+            E-mail: 
+        </div>
+    </div>
+</div>
+<!-- <tr>
     <td style="width:25%;">
         <strong>Fecha:</strong> 
-           <!-- <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>-->
+           <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>
     </td>
     <td style="width:25%;" class="text-left">
         <strong>Comercial/Vendedor:</strong>
@@ -112,7 +116,7 @@
     <tr>
         <td style="width:35%;">
             <strong>Cliente:</strong> 
-               <!-- <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>-->
+               <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>
         </td>
         <td style="width:25%;" class="text-left">
             <strong>Tel:</strong>
@@ -140,7 +144,7 @@
         <td style="width:35%;">
               <br/>
             <strong>Dirección:</strong> 
-               <!-- <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>-->
+               <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>
         </td>
         <td style="width:25%;" class="text-left">
              <br/>
@@ -163,187 +167,108 @@
         </td>
         <td style="width:5%;">
         </td> 
+    </tr> 
+-->
+<br/><br/>
+<table id="mainTable" class="shadow rounded">
+    <tr class="first-table-header">
+        <th colspan="2">vendedor</th>
+        <th colspan="1">or. compra</th>
+        <th colspan="1">enviar vía</th>
+        <th colspan="2">fecha de envío</th>
+        <th colspan="2">términos</th>
+        <th colspan="1">fecha</th>
+        <th colspan="1" style="border-right: none;">pag</th>
     </tr>
-</table> 
-<br/>
-<t t-set="contador" t-value="1"/>
-<t t-set="gravado" t-value="0"/>
-<t t-set="exenta" t-value="0"/>
-<table class="table table-condensed" style="font-size:12px;border:1px solid black;">
-    <thead style="background: rgb(103,180,63);">
-        <tr style="font-size:12px;">
-            <th class="text-center" style="width:10%;border:1px solid black;">Cantidad.</th>
-            <th class="text-center" style="width:15%;border:1px solid black;">Código</th> 
-            <th style="width:30%;border:1px solid black;">Descripción Producto</th>
-            <th class="text-center" style="width:15%;border:1px solid black;">Valor Unitario</th>
-             <th class="text-center" style="width:15%;border:1px solid black;">Descuento y Rebajas</th>
-            <th class="text-center" style="width:15%;border:1px solid black;">Total</th>
-        </tr>
-    </thead>
-
-    <tbody class="invoice_tbody" style="font-size:12px;">
-        <tr t-foreach="o.invoice_line" t-as="l">
-            <t t-if="l.invoice_line_tax_id">
-                <t t-set="gravado" t-value="gravado + l.price_subtotal"/>
-            </t>
-            <t t-if="not(l.invoice_line_tax_id)">
-                <t t-set="exenta" t-value="exenta + l.price_subtotal"/>
-            </t>
-            <td class="text-center" style="width:10%;;border:1px solid black;">
-                  <span t-field="l.quantity"/>
-            </td>
-             <td class="text-center" style="width:15%;;border:1px solid black;">
-                <span t-field="l.product_id.default_code"/>
-            </td>
-            <td class="text-center" style="width:30%;;border:1px solid black;">
-                
-                <t t-if="l.product_id.name is False ">
-                      <span t-field="l.name"/>
-                </t>
-
-                <t t-if="l.product_id.name is not False ">
-                      <span t-field="l.product_id.name"/>
-                </t>
-            </td>
-            <td class="text-center" style="width:15%;;border:1px solid black;">
-                 <span t-field="l.price_unit"/>
-            </td>
-            <td class="text-center" style="width:15%;;border:1px solid black;">
-                 <span t-field="l.discount"/>
-            </td>
-            <td class="text-center" style="width:15%;;border:1px solid black;">
-                <span t-field="l.price_subtotal"/>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<div class="row" style="font-size:12px;">
-    <div class="col-xs-8">
-         <p style="font-size:10px;" class="text-left">
-                     <!--
-                     <strong>
-                         Recibí la mercadería completa en buenas condiciones por el carácter de factura cambiaria, según el código de comisión, acepto las condiciones convenidas en esta. En caso la parte deudora no pague el valor de la mercadería en fecha acordada, se cobrará un 5% de recargo por mora, lo cual se tendrá expresamente aceptado en la firma del presente contrato. 
-                      </strong>
-                    -->
-          </p>
-              
-              <br/>
-              <br/>
-              <br/>
-
-           <p class="text-center">
-              <p class="text-center">
-                    ___________________________________________ 
-                    <br/>
-                            Firma
-                    <br/>
-                    Esta Factura no es comprobante de Pago, Exija su correspondiente Recibo de Caja
-                    <br/>
-                    <strong> La Factura es beneficio de Todos ¡Exijala! </strong>
-              </p>
-           </p>  
-
-            <br/>
-       
-          <strong>Total en letras : </strong>  <br/> 
-             <span t-field="o.amount_total_text"> </span>
-                   <br/>   <br/>
-      
-    </div>
-<div class="col-xs-4 pull-right">
-<table class="table table-condensed">
-    <tr style="font-size:12px;" class="border-black">
-        <td>Descuento Otorgados</td>
-        <td class="text-right">
-           <span t-field="o.total_descuento" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+    <tr>
+        <td colspan="2">asd</td>
+        <td colspan="1">asd</td>
+        <td colspan="1">asd</td>
+        <td colspan="2">asd</td>
+        <td colspan="2">asd</td>
+        <td colspan="1">asd</td>
+        <td colspan="1">asd</td>
+    </tr>
+    <tr class="second-table-header">
+        <th colspan="1">ctd</th>
+        <th colspan="1">código</th>
+        <th colspan="3">descripción</th>
+        <th colspan="1">precio</th>
+        <th colspan="1">unidad</th>
+        <th colspan="1" style="font-size: 5px;">descuentos y rebajas</th>
+        <th colspan="1">total</th>
+        <th colspan="1">isv</th>
+    </tr>
+    <tr>
+        <td colspan="1">asd</td>
+        <td colspan="1">asd</td>
+        <td colspan="3">asd</td>
+        <td colspan="1">asd</td>
+        <td colspan="1">asd</td>
+        <td colspan="1">asd</td>
+        <td colspan="1">asd</td>
+        <td colspan="1">asd</td>
+    </tr>
+    <tr>
+        <td colspan="1"> </td>
+        <td colspan="1"> </td>
+        <td colspan="3"> </td>
+        <td colspan="1"> </td>
+        <td colspan="1"> </td>
+        <td colspan="1">Total L.</td>
+        <td colspan="1"> </td>
+        <td colspan="1"> </td>
+    </tr>
+    <tr>
+        <td class="table-footer" rowspan="5" colspan="5">
+            <div style="text-align: center; width: 100%;">
+                <div style="font-weight: bold; font-size: 7px; width: 100%; display: inline-block; ">
+                    RECIBI LA MERCADERIA COMPLETA EN BUENAS CONICIONES POR EL CARACTER DE FACTURA CAMBIARIA, SEGUN EL CODIGO DE COMERCIO,<br/>
+                    ACEPTO LAS CONDICIONES CONVENIDAS EN ESTA. EN CASO LA PARTE DEUDORA NO PAGUE EL VALOR DE LA MERCADERIA EN FECHA ACORDADA,<br/>
+                    SE COBRARA UN 5% DE RECARGO POR MORA, LO CUAL SE TENDRÁ EXPRESAMENTE ACEPTADO EN LA FIRMA DEL PRESENTE CONTRATO
+                </div><br/><br/><br/>
+                <div style="text-align: center; width:100%; display: inline-block;">
+                    <div style="border-bottom: 1px solid black; white-space: pre; margin-left: 40px; margin-right: 40px;" /><br/>
+                    <div style="font-weight: bold; font-size: 10px; width:100%; display: inline-block;">Firma</div>
+                    <div style="font-weight: bold; font-size: 7px; font-style: italic; width:100%; display: inline-block;">Esta Factura no es comprobante de Pago, Exija su corespondiente Recibo de Caja</div>
+                    <div style="font-weight: bold; font-size: 9px; font-style: italic; width:100%; display: inline-block;" >La Factura es beneficio de Todos ¡Exijala!</div>
+                </div>
+            </div>
         </td>
+        <td class="table-footer" colspan="2">Importe Exonerado L.</td>
+        <td class="table-footer" colspan="3">1</td>
     </tr>
-    <tr style="font-size:12px;" class="border-black">
-        <td>Rebajas Otorgadas</td>
-        <td class="text-right">
-           <span t-field="o.currency_id.symbol"/> 0.00
-        </td>
+    <tr>
+        <td class="table-footer" colspan="2">Importe Exento L.</td>
+        <td class="table-footer" colspan="3">2</td>
     </tr>
-    <tr class="border-black">
-        <td style="font-size:12px;">Sub-Total</td>
-        <td class="text-right" style="font-size:12px;">
-          <span t-field="o.amount_untaxed" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
-        </td>
+    <tr>
+        <td class="table-footer" colspan="2">Importe Gravado 15% L.</td>
+        <td class="table-footer" colspan="3">3</td>
     </tr>
-    <tr class="border-black">
-        <td style="font-size:12px;">Importe Exento</td>
-        <td class="text-right" style="font-size:12px;">
-             <span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(exenta)"/> 
-        </td>
+    <tr>
+        <td class="table-footer" colspan="2">I.S.V. 15% L.</td>
+        <td class="table-footer" colspan="3">4</td>
     </tr>
-
-    <tr style="font-size:12px;" class="border-black">
-        <td>Importe Gravado</td>
-        <td class="text-right">
-         <span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(gravado)"/> 
-        </td>
+    <tr>
+        <td class="table-footer" colspan="2">TOTAL A PAGAR L.</td>
+        <td class="table-footer" colspan="3">5</td>
     </tr>
-     <tr style="font-size:12px;" class="border-black">
-        <td>ISV 15%</td>
-        <td class="text-right">
-            <span t-field="o.amount_tax" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
-        </td>
-    </tr>
-      <tr style="font-size:12px;" class="border-black">
-        <td>ISV 18%</td>
-        <td class="text-right">
-             <span t-field="o.currency_id.symbol"/> 0.0
-        </td>
-    </tr>
-    <tr class="border-black">
-        <td style="font-size:12px;">Importe Exonerado</td>
-        <td class="text-right" style="font-size:12px;">
-           <span t-field="o.currency_id.symbol"/> 0.00
-        </td>
-    </tr>
-    <tr class="border-black">
-        <td style="font-size:12px;">TOTAL</td>
-        <td class="text-right" style="font-size:12px;">
-             <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+    <tr>
+        <td class="table-footer" colspan="10" style="font-weight: bolder;">
+            Total en Letras: sdasd
         </td>
     </tr>
 </table>
-</div>  
-</div>
-    <table style="height:110px;">
-        <tr><td/><td><p/></td><td/></tr>
-        <tr>
-        <td class="text-left" style="width:85%;">
-           
-           
-            <strong>Datos del adquiriente exonerado</strong><br/>
-              
-              <p style="width:450px;"> 
-                 N° Correlativo de orden de compra exenta:
-                  <span t-field="o.numero_orden_exenta"/>
-                  <br/> 
-                 N° Correlativo de constancia de registro exonerado:
-                  <span t-field="o.numero_correlativo_constancia_exonerado"/>
-                   <br/>
-                   N° Identificativo del registro de la SAG:
-                  <span t-field="o.numero_identificacion_sag"/> 
-                  
 
-              </p>
-
-          
-            
-            
-            
-            
-        </td>
-        <td style="width:15%;"/></tr>
-        </table> 
-    <!--
-    <strong >OBSERVACIONES:  <span t-field="o.comment"> </span></strong>
-    -->
+<div class="end">
+    <div class="text" style="font-weight: bolder;">Datos del adquiriente exonerado</div><br/>
+    <div class="text">Número correlativo de la orden de compra:</div><div style="width:60%; border-bottom: 1px solid black; display: inline-block; white-space: pre;" /> <br/>
+    <div class="text">Número correlativo delregistro de exonerado:</div><div style="width:60%; border-bottom: 1px solid black; display: inline-block;" /> <br/>
+    <div class="text">Número identificativo de la SAG:</div><div style="width:60%; border-bottom: 1px solid black; display: inline-block;" /> <br/>
 </div>
 
+</div>
 
       <!-- Esta etiqueta del footer es la que no funciona -->
   </t>
