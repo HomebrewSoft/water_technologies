@@ -1,391 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data>
-<template id="facturas_print_view_document2">
+    <data>
+        <template id="facturas_print_view_document2">
+            <t t-call="report.layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="header">
+                        <link href="/deiWater/static/src/css/facturas_print_view_Preimpresa.css" rel="stylesheet"/>
+                        <div class="container">
+                            <div class="company-info">
+                                <img class="logo-img" t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo"/>
+                                <br/>
+                                <span t-field="o.company_id.street"/>
+                                ,
+                                <span t-field="o.company_id.street2"/>
+                                ,
+                                <br/>
+                                <span t-field="o.company_id.city"/>
+                                ,
+                                <span t-field="o.company_id.country_id.name"/>
+                                - Email:
+                                <span t-field="o.company_id.email"/>
+                                <br/>
+                                Telefono:
+                                <span t-field="o.company_id.phone"/>
+                            </div>
 
-<t t-call="report.html_container">
-<t t-foreach="docs" t-as="o">
+                            <div class="bill-info">
+                                <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">FACTURA</span>
+                                <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
+                                <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Factura borrador</span>
+                                <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Factura Cancelada</span>
+                                <span t-if="o.type == 'out_refund'">NOTA DE CREDITO</span>
+                                <span t-if="o.type == 'in_refund'">Devolución</span>
+                                <span t-if="o.type == 'in_invoice'">Factura</span>
+                                <br/>
+                                No.
+                                <span id="billNumber" t-field="o.number"/>
+                            </div>
+                            <br/>
+                            <div class="header-footer">
+                                <div class="bold">
+                                    RTN #
+                                    <span t-field="o.company_id.company_registry"/>
+                                </div>
+                                <div class="bold">
+                                    Fecha de Vencimiento:
+                                    <span t-field="o.cai_expires_shot"/>
+                                </div>
+                                <div class="bold">
+                                    Rango Autorizado:
+                                    <span t-field="o.min_number_shot"/>
+                                    AL
+                                    <span t-field="o.max_number_shot"/>
+                                    <br/>
+                                    CAI:
+                                    <span t-field="o.cai_shot"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page">
+                        <link href="/deiWater/static/src/css/facturas_print_view_Preimpresa.css" rel="stylesheet"/>
+                        <div class="client-info shadow">
+                            <div class="col-ci">
+                                <div class="row-ci">
+                                    <span class="invisible">Cliente:</span>
+                                    <span t-field="o.partner_id.name"/>
+                                </div>
+                                <br/>
+                                <div class="row-ci">
+                                    <span class="invisible">RTN Cliente:</span>
+                                    <span t-field="o.partner_id.rtn"/>
+                                </div>
+                            </div>
+                            <div class="col-ci">
+                                <div class="row-ci">
+                                    <span class="invisible">Teléfono:</span>
+                                    <span t-field="o.partner_id.phone"/>
+                                </div>
+                                <br/>
+                                <div class="row-ci">
+                                <span class="invisible">Contacto:</span>
+                            </div>
+                                <br/>
+                                <div class="row-ci">
+                                <span class="invisible">E-mail:</span>
+                            </div>
+                            </div>
+                        </div>
 
+                        <br/>
+                        <br/>
+                        <t t-set="acumulador" t-value="0"/>
+                        <t t-set="gravado" t-value="0"/>
+                        <t t-set="exenta" t-value="0"/>
+                        <table id="mainTable" class="shadow">
+                            <tr class="first-table-header">
+                                <th class="invisible" colspan="2">vendedor</th>
+                                <th class="invisible" colspan="1">or. compra</th>
+                                <th class="invisible" colspan="1">enviar vía</th>
+                                <th class="invisible" colspan="2">fecha de envío</th>
+                                <th class="invisible" colspan="2">términos</th>
+                                <th class="invisible" colspan="1">fecha</th>
+                                <th class="invisible" colspan="1" style="border-right: none;">pag</th>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span t-field="o.user_id.name"/>
+                                </td>
+                                <td colspan="1">
+                                    <span t-field="o.sale_order"/>
+                                </td>
+                                <td colspan="1">
+                                    <span t-field="o.send_via"/>
+                                </td>
+                                <td colspan="2">
+                                    <span t-field="o.date_shipping"/>
+                                </td>
+                                <td colspan="2">
+                                    <span t-field="o.payment_term.name"/>
+                                </td>
+                                <td colspan="1">
+                                    <span t-field="o.date_invoice"/>
+                                </td>
+                                <td colspan="1">
+                                    1
+                                    <!-- TODO -->
+                                </td>
+                            </tr>
+                            <tr class="second-table-header">
+                                <th class="invisible" colspan="1">ctd</th>
+                                <th class="invisible" colspan="1">código</th>
+                                <th class="invisible" colspan="3">descripción</th>
+                                <th class="invisible" colspan="1">precio</th>
+                                <th class="invisible" colspan="1">unidad</th>
+                                <th class="invisible" colspan="1" style="font-size: 5px;">descuentos y rebajas</th>
+                                <th class="invisible" colspan="1">total</th>
+                                <th class="invisible" colspan="1">isv</th>
+                            </tr>
+                            <t t-set="emptySpace" t-value="450"/>
+                            <tr t-foreach="o.invoice_line" t-as="l">
+                                <t t-set="emptySpace" t-value="emptySpace - 20"/>
+                                <t t-if="l.invoice_line_tax_id">
+                                    <t t-set="gravado" t-value="gravado + l.price_subtotal"/>
+                                </t>
+                                <t t-if="not(l.invoice_line_tax_id)">
+                                    <t t-set="exenta" t-value="exenta + l.price_subtotal"/>
+                                </t>
+                                <t t-set="acumulador" t-value="acumulador + l.price_subtotal"/>
+                                <td class="txt-right" colspan="1">
+                                    <span t-field="l.quantity"/>
+                                </td>
+                                <td colspan="1">
+                                    <span t-field="l.product_id.default_code"/>
+                                </td>
+                                <td colspan="3">
+                                    <t t-if="l.product_id.name is False ">
+                                        <span t-field="l.name"/>
+                                    </t>
+                                    <t t-if="l.product_id.name is not False ">
+                                        <span t-field="l.product_id.name"/>
+                                    </t>
+                                </td>
+                                <td class="txt-right" colspan="1">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <td colspan="1">
+                                    <span t-field="l.product_id.uom_id"/>
+                                </td>
+                                <td class="txt-right" colspan="1">
+                                    <span t-esc="'{0:,.2f}'.format((1- l.discount / 100) * l.price_unit * l.quantity)"/>
+                                </td>
+                                <td class="txt-right" colspan="1">
+                                    <span t-field="l.price_subtotal"/>
+                                </td>
+                                <td class="txt-right" colspan="1">
+                                    <span t-esc="'{0:,.2f}'.format(l.isv)"/>
+                                </td>
+                            </tr>
+                            <style type="text/css">
+                                #emptyTR {
+                                    height:
+                                <t t-esc="emptySpace"/>
+                                px;
+                                }
+                            </style>
+                            <tr id="emptyTR">
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                                <td colspan="3"></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                                <td colspan="3"></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
+                                <td class="invisible" colspan="1">Total L.</td>
+                                <td class="txt-right visible-dynamic-data" colspan="1">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-esc="'{0:,.2f}'.format(acumulador)"/>
+                                </td>
+                                <td colspan="1"></td>
+                            </tr>
+                            <tr>
+                                <td class="table-footer" rowspan="5" colspan="5">
+                                    <div class="invisible" style="text-align: center; width: 100%;">
+                                        <div style="font-weight: bold; font-size: 7px; width: 100%; display: inline-block; ">
+                                            RECIBI LA MERCADERIA COMPLETA EN BUENAS CONICIONES POR EL CARACTER DE FACTURA CAMBIARIA, SEGUN EL CODIGO DE COMERCIO,
+                                            <br/>
+                                            ACEPTO LAS CONDICIONES CONVENIDAS EN ESTA. EN CASO LA PARTE DEUDORA NO PAGUE EL VALOR DE LA MERCADERIA EN FECHA ACORDADA,
+                                            <br/>
+                                            SE COBRARA UN 5% DE RECARGO POR MORA, LO CUAL SE TENDRÁ EXPRESAMENTE ACEPTADO EN LA FIRMA DEL PRESENTE CONTRATO
+                                        </div>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <div style="text-align: center; width:100%; display: inline-block;">
+                                            <div style="border-bottom: 1px solid black; white-space: pre; margin-left: 40px; margin-right: 40px;"/>
+                                            <br/>
+                                            <div style="text-transform: uppercase; font-weight: bold; font-size: 10px; width:100%; display: inline-block;">Firma</div>
+                                            <div style="font-weight: bold; font-size: 7px; font-style: italic; width:100%; display: inline-block;">Esta Factura no es comprobante de Pago, Exija su corespondiente Recibo de Caja</div>
+                                            <div style="font-weight: bold; font-size: 9px; font-style: italic; width:100%; display: inline-block;">La Factura es beneficio de Todos ¡Exijala!</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="table-footer txt-right invisible" colspan="2">Importe Exonerado L.</td>
+                                <td class="table-footer txt-right" colspan="3">
+                                    <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-footer txt-right invisible" colspan="2">Importe Exento L.</td>
+                                <td class="table-footer txt-right" colspan="3">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-esc="'{0:,.2f}'.format(exenta)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-footer txt-right invisible" colspan="2">Importe Gravado 15% L.</td>
+                                <td class="table-footer txt-right" colspan="3">
+                                    <span t-field="o.currency_id.symbol"/>
+                                    <t t-esc="'{0:,.2f}'.format(gravado)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-footer txt-right invisible" colspan="2">I.S.V. 15% L.</td>
+                                <td class="table-footer txt-right" colspan="3">
+                                    <span t-field="o.amount_tax" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-footer txt-right invisible" colspan="2">TOTAL A PAGAR L.</td>
+                                <td class="table-footer txt-right" colspan="3">
+                                    <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="table-footer" colspan="10" style="font-weight: bolder;">
+                                    <span class="invisible">Total en Letras:</span>
+                                    <span t-field="o.amount_total_text"/>
+                                </td>
+                            </tr>
+                        </table>
 
-<div class="page">
+                        <div class="end">
+                            <div class="text invisible" style="font-size: 16px;">Datos del adquiriente exonerado</div>
+                            <br/>
+                            <div class="text invisible">Número correlativo de la orden de compra:</div>
+                            <span style="width:50%; border-bottom: 1px solid white; display: inline-block;" t-field="o.numero_orden_exenta"/>
+                            <br/>
+                            <div class="text invisible">Número correlativo delregistro de exonerado:</div>
+                            <span style="width:50%; border-bottom: 1px solid white; display: inline-block;" t-field="o.numero_correlativo_constancia_exonerado"/>
+                            <br/>
+                            <div class="text invisible">Número identificativo de la SAG:</div>
+                            <span style="width:50%; border-bottom: 1px solid white; display: inline-block;" t-field="o.numero_identificacion_sag"/>
+                            <br/>
+                        </div>
 
-<table style="position: static; margin-top: -20px; " >
-<tr>
-      <td style="width:13%;" >
-      </td>
+                    </div>
 
-        <td class="text-justify" style="width:45%;">
-              <strong> 
-                <span t-field="o.partner_id.name"/>,
-                <br/> 
-                <span t-field="o.partner_id.street"/>
-              </strong>
-              <br/>
-              
-              
-              <strong >
-              <span t-field="o.partner_id.rtn"/>
-              </strong>
-
-        </td>
-        <td style="width:15%;">
-              
-        </td>
-
-        <td>
-              <br/>
-
-              <strong> <span t-field="o.partner_id.phone"/></strong> 
-              <br/>
-              <br/>
-               <strong> <span t-field="o.partner_id.mobile"/></strong>
-               <br/>
-               <strong> <span t-field="o.partner_id.email"/></strong>
-
-        </td>
-
-
-</tr>
-<br/>
-
-
-</table>
-
-<table style="font-size:12px; width:100%;">
-  
-
-<tr>
-  
-</tr>
-
-<tr>
-        <td style="width:100%;">
-          <!--
-             <strong style="margin-left:100px; " ><span  t-field="o.partner_id.name"/></strong> 
-          -->
-        </td>
-        <td style="width:25%;" class="text-left">
-           
-          
-
-        </td>
-        <td style="width:25%;" class="text-center">
-          
-        </td>
-        
-</tr>
-
-
-
-    <tr>
-        <td style="width:35%;">
-             
-        </td>
-        <td style="width:25%;" class="text-left">
-           
-
-        </td>
-        <td style="width:25%;" class="text-center">
-          
-        </td>
-        <td style="width:5%;">
-          
-        </td> 
-    </tr>
-    <tr>
-        <td style="width:35%;">
-            
-               <!-- <strong>RTN: </strong><span t-field="o.partner_id..rtn"/>-->
-        </td>
-        <td style="width:25%;" class="text-center">
-             
-        </td>
-        <td style="width:25%;" class="text-center">
-              
-        </td>
-         <td style="width:5%;">
-          
-        </td> 
-    </tr>
-    <tr>
-        <td class="text-left" style="width:35%; ">
-
-            
-        </td>
-        <td style="width:25%;" class="text-left">
-          <!--
-           <span t-field="o.partner_id.phone"/>
-          -->
-        </td>
-        <td style="width:25%;" class="text-center">
-            
-        </td>
-         <td style="width:5%;">
-        </td> </tr>
-    <tr>
-        <td style="width:35%;">
-              <br/>
-            <!--  
-            <strong>Dirección:</strong> 
-              
-            -->
-        </td>
-        <td style="width:25%;" class="text-left">
-            
-        </td>
-        <td style="width:25%;" class="text-center">
-             
-        </td>
-         <td style="width:5%;">
-        </td> 
-    </tr>
-    <tr>
-        <td class="text-left" style="width:35%; margin-left: 200px;">
-         
-         <!-- <strong> <span t-field="o.partner_id.rtn"/> </strong> -->
-
-        </td>
-        <td style="width:25%;" class="text-left">
-          
-        </td>
-        <td style="width:25%;" class="text-center">
-       
-        </td>
-        <td style="width:5%;">
-
-        </td> 
-    </tr>
-
-    
-</table> 
-<br/>
-<t t-set="contador" t-value="1"/>
-<t t-set="gravado" t-value="0"/>
-<t t-set="exenta" t-value="0"/>
-
-<div style="height: 450px;">
-  <br/>
-
-   <table style="font-size:12px; margin-top: 10px; position: static;">
-
-      <tr>
-        <td class="text-justify" style="width:18%;">
-         
-         <strong> <span t-field="o.user_id.name"/> </strong> 
-
-        </td>
-        
-        <td style="width:4%;">
-         
-          
-
-        </td>
-
-        <td class="text-justify" style="width:4%;" >
-          <strong> <span t-field="o.partner_id.property_payment_term"/> </strong>
-        </td>
-
-        <td style="width:1%;">
-         
-          
-
-        </td>
-
-        <td class="text-justify" style="width:5%;">
-          <strong> <span t-field="o.date_invoice"/> </strong>
-        </td> 
-    </tr>
-
-   </table>
-
-
-<table class="table table-condensed" style="font-size:12px;">
-    <thead>
-        <tr style="font-size:12px;">
-           <!--
-            <th class="text-left" >Cantidad.</th>
-              
-            <th class="text-center" style="width:15%;border:1px solid black;">Código</th> 
-            <th style="width:30%;border:1px solid black;">Descripción Producto</th>
-            <th class="text-center" style="width:15%;border:1px solid black;">Valor Unitario</th>
-             <th class="text-center" style="width:15%;border:1px solid black;">Descuento y Rebajas</th>
-            <th class="text-center" style="width:15%;border:1px solid black;">Total</th>
-          -->
-          <br/> 
-        </tr>
-    </thead>
-    <br/> 
-    
-    <tbody style="margin-left:11px; font-size:12px;">
-        
-        <tr t-foreach="o.invoice_line" t-as="l">
-            <t t-if="l.invoice_line_tax_id">
-                <t t-set="gravado" t-value="gravado + l.price_subtotal"/>
-            </t>
-            <t t-if="not(l.invoice_line_tax_id)">
-                <t t-set="exenta" t-value="exenta + l.price_subtotal"/>
-            </t>
-
-            <!--INFORMACION DE LA TABLA Y SUS PRODUCTOS-->
-           <td style="width:1%;">
-
-            </td>
-
-            <td class="text-justify" style="width:6%;">
-                  <span t-field="l.quantity"/>
-            </td>
-
-            <td class="text-justify" style="width:6%;">
-                <span t-field="l.product_id.default_code"/>
-            </td>
-            
-            <td class="text-justify" style="width:14%;">
-                
-                <t t-if="l.product_id.name is False ">
-                      <span t-field="l.name"/>
+                    <!-- Esta etiqueta del footer es la que no funciona -->
                 </t>
-
-                <t t-if="l.product_id.name is not False ">
-                      <span t-field="l.product_id.name"/>
-                </t>
-            </td>
-
-            <td style="width:5%;">
-
-            </td>
-
-            <td class="text-center" style="width:11%;">
-                 <span t-field="l.price_unit"/>
-            </td>
-            <td style="width:3%;">
-
-            </td>
-            <td style="width:3%;">
-
-            </td>
-           
-            <td class="text-justify" style="width:5%;">
-                 <span t-field="l.discount"/>
-            </td>
-            <td class="text-justify" style="width:10%;">
-                <span t-field="l.price_subtotal"/>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-</div>
-
-
-
-<div class="row" style="font-size:10px; margin-top: 23px; position: static;  ">
-    <div class="col-xs-8" >
-    
-    <table class="table " style="font-size:12px;">
-       <tbody>
-        <tr>
-          <td style="width:32%;">
-            
-           </td>
-
-            <td>
-                 <br/><br/><br/>
-                  <br/><br/><br/>
-                  <br/><br/><br/>
-                  <br/> <br/> 
-                  <br/>
-                  
-                <!-- <strong>Total en letras : </strong>  -->
-                  
-                  <br/> 
-                  
-                  <strong > 
-                          <span  t-field="o.amount_total_text"> </span>
-                  </strong>
-                         <br/>   
-            </td>
-         </tr>
-       </tbody>
-    </table>
-      
-    </div>
-<div class="col-xs-4 pull-right" >
-  
-<table class="table " >
-     
-     <br/>
-   
-    <tr>
-        <!-- <td style="font-size:12px;">Importe Exonerado</td> -->
-        <td class="text-right" style="font-size:12px;">
-           <span t-field="o.currency_id.symbol"/> 0.00
-        </td>
-    </tr>
-
-    <tr>
-        <!--<td style="font-size:12px;">Importe Exento</td> -->
-        <td class="text-right" style="font-size:12px;">
-             <span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(exenta)"/>
-        </td>
-    </tr>
-
-
-
-    <tr >
-
-       <br/>
-        
-   
-        <!--<td>Importe Gravado</td> -->
-        <td class="text-right" style="font-size:12px;">
-            <span t-field="o.currency_id.symbol"/> <t t-esc="'{0:,.2f}'.format(gravado)"/> 
-        </td>
-    </tr>
-     <tr >
-      <br/>
-     
-   
-            <!--<td>ISV 15%</td> -->
-        <td class="text-right" style="font-size:12px;">
-            <span t-field="o.amount_tax" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
-        </td>
-    </tr>
-     
-    <tr>
-      <br/>
-       
-   
-        <!--<td style="font-size:12px;">TOTAL</td> -->
-        <td class="text-right" style="font-size:12px;">
-             <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
-        </td>
-
-    </tr>
-</table>
-
-    </div>  
-    </div>
-
-   
-    
-
-</div>
-
-  
-
-
-      <!-- Esta etiqueta del footer es la que no funciona -->
-  </t>
-  </t>
-  
-</template>
-
-<template id="report_factura_view">
-        <t t-call="report.html_container">
-            <t t-foreach="docs" t-as="doc">
-            <t t-raw="translate_doc(doc_id, doc_model,'partner_id.lang','deiWater.facturas_print_view_document2')"/>
             </t>
-        </t>
-</template>
-</data>
+  
+        </template>
+
+        <template id="report_factura_view">
+                <t t-call="report.html_container">
+                    <t t-foreach="docs" t-as="doc">
+                    <t t-raw="translate_doc(doc_id, doc_model,'partner_id.lang','deiWater.facturas_print_view_document2')"/>
+                    </t>
+                </t>
+        </template>
+    </data>
 </openerp>
