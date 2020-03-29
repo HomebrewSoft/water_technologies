@@ -7,9 +7,9 @@
       <field name="inherit_id" ref="account.invoice_form"/>
       <field name="arch" type="xml">
         <field name="fiscal_position" position="after">
+          <field name="sale_order"/>
           <field name="send_via"/>
           <field name="date_shipping"/>
-          <field name="pag"/>
         </field>
         <xpath expr="//field[@name='amount_tax']" position="after">
           <field name="total_descuento" widget="monetary" options="{'currency_field': 'currency_id'}"/>

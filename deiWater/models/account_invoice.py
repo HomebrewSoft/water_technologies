@@ -20,11 +20,11 @@ class account_invoice(models.Model):
     max_number_shot = fields.Char("max_number", readonly=True)
 
     amount_total_text = fields.Char("Amount Total", compute='get_totalt', default='Cero')
+    sale_order = fields.Char(
+    )
     send_via = fields.Char(
     )
     date_shipping = fields.Date(
-    )
-    pag = fields.Char(
     )
 
     _sql_constraints = [
