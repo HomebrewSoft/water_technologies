@@ -138,7 +138,7 @@
                                 <th colspan="1">total</th>
                                 <th colspan="1">isv</th>
                             </tr>
-                            <t t-set="emptySpace" t-value="500"/>
+                            <t t-set="emptySpace" t-value="450"/>
                             <tr t-foreach="o.invoice_line" t-as="l">
                                 <t t-set="emptySpace" t-value="emptySpace - 20"/>
                                 <t t-if="l.invoice_line_tax_id">
@@ -273,13 +273,13 @@
                             <div class="text" style="font-size: 16px;">Datos del adquiriente exonerado</div>
                             <br/>
                             <div class="text">Número correlativo de la orden de compra:</div>
-                            <span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_orden_exenta"/>
+                            <span style="width:50%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_orden_exenta"/>
                             <br/>
                             <div class="text">Número correlativo delregistro de exonerado:</div>
-                            <span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_correlativo_constancia_exonerado"/>
+                            <span style="width:50%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_correlativo_constancia_exonerado"/>
                             <br/>
                             <div class="text">Número identificativo de la SAG:</div>
-                            <span style="width:60%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_identificacion_sag"/>
+                            <span style="width:50%; border-bottom: 1px solid black; display: inline-block;" t-field="o.numero_identificacion_sag"/>
                             <br/>
                         </div>
 
