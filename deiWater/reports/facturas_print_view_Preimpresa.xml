@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <openerp>
     <data>
         <template id="facturas_print_view_document2">
@@ -8,7 +8,7 @@
                         <link href="/deiWater/static/src/css/facturas_print_view_Preimpresa.css" rel="stylesheet"/>
                         <div class="container">
                             <div class="company-info">
-                                <img class="logo-img" t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo"/>
+                                <img class="logo-img invisible" t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo"/>
                                 <br/>
                                 <span t-field="o.company_id.street"/>
                                 ,
@@ -80,12 +80,12 @@
                                 </div>
                                 <br/>
                                 <div class="row-ci">
-                                <span class="invisible">Contacto:</span>
-                            </div>
+                                    <span class="invisible">Contacto:</span>
+                                </div>
                                 <br/>
                                 <div class="row-ci">
-                                <span class="invisible">E-mail:</span>
-                            </div>
+                                    <span class="invisible">E-mail:</span>
+                                </div>
                             </div>
                         </div>
 
@@ -288,15 +288,15 @@
                     <!-- Esta etiqueta del footer es la que no funciona -->
                 </t>
             </t>
-  
+
         </template>
 
         <template id="report_factura_view">
-                <t t-call="report.html_container">
-                    <t t-foreach="docs" t-as="doc">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="doc">
                     <t t-raw="translate_doc(doc_id, doc_model,'partner_id.lang','deiWater.facturas_print_view_document2')"/>
-                    </t>
                 </t>
+            </t>
         </template>
     </data>
 </openerp>
