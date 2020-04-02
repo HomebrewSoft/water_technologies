@@ -5,27 +5,27 @@ span {
 
 /* client info */
 .cliente {
-    top: 70px;
+    top: 20px;
     left: 95px;
 }
 
 .rtn-cliente {
-    top: 118px;
+    top: 68px;
     left: 135px;
 }
 
 .phone {
-    top: 70px;
+    top: 30px;
     left: 594px;
 }
 
 .contacto {
-   top: 101px;
+   top: 61px;
    left: 603px;
 }
 
 .e-mail {
-    top: 130px;
+    top: 90px;
     left: 580px;
 }
 
@@ -41,49 +41,49 @@ span {
 .vendedor {
     width: 189px;
     height: 35px;
-    top: 200px;
+    top: 170px;
     left: 14px;
 }
 
 .or-compra {
     width: 96px;
     height: 35px;
-    top: 200px;
+    top: 170px;
     left: 203px;
 }
 
 .enviar-via {
     width: 118px;
     height: 35px;
-    top: 200px;
+    top: 170px;
     left: 299px;
 }
 
 .fecha-envio {
     width: 162px;
     height: 35px;
-    top: 200px;
+    top: 170px;
     left: 417px;
 }
 
 .terminos {
     width: 148px;
     height: 35px;
-    top: 200px;
+    top: 170px;
     left: 579px;
 }
 
 .fecha {
     width: 94px;
     height: 35px;
-    top: 200px;
+    top: 170px;
     left: 727px;
 }
 
 .pag {
     width: 46px;
     height: 35px;
-    top: 200px;
+    top: 170px;
     left: 821px;
 }
 
@@ -91,7 +91,7 @@ span {
 .articles {
     width: 856px;
     position: fixed;
-    top: 267px;
+    top: 237px;
     left: 16px;
     text-align: left;
     padding: 3px;
@@ -120,11 +120,11 @@ span {
 }
 
 .descripcion {
-    width: 250px;
+    width: 230px;
 }
 
 .precio {
-    width: 115px;
+    width: 130px;
 }
 
 .unidad {
@@ -146,7 +146,7 @@ span {
 #subtotal {
     display: fixed;
     width: 110px;
-    top: 650px;
+    top: 620px;
     left: 665px;
 }
 
@@ -155,7 +155,7 @@ span {
     display: fixed;
     width: 165px;
     height: 35px;
-    top: 675px;
+    top: 645px;
     left: 595px;
 }
 
@@ -163,7 +163,7 @@ span {
     display: fixed;
     width: 165px;
     height: 35px;
-    top: 710px;
+    top: 680px;
     left: 630px;
 }
 
@@ -171,7 +171,7 @@ span {
     display: fixed;
     width: 165px;
     height: 35px;
-    top: 745px;
+    top: 715px;
     left: 630px;
 }
 
@@ -179,7 +179,7 @@ span {
     display: fixed;
     width: 165px;
     height: 35px;
-    top: 780px;
+    top: 750px;
     left: 595px;
 }
 
@@ -187,7 +187,7 @@ span {
     display: fixed;
     width: 165px;
     height: 35px;
-    top: 815px;
+    top: 785px;
     left: 595px;
 }
 
@@ -195,31 +195,31 @@ span {
     display: fixed;
     width: 400px;
     height: 35px;
-    top: 845px;
+    top: 815px;
     left: 180px;
 }
 
 /* final */
 .end {
     display: fixed;
-    top: 890px;
+    top: 860px;
     left: 390px;
 }
 /* .fin-exenta {
     width: 200px;
-    top: 1000px;
+    top: 970px;
     left: 390px;
 }
 
 .fin-exonerado {
     width: 200px;
-    top: 1035px;
+    top: 1005px;
     left: 390px;
 }
 
 .fin-sag {
     width: 200px;
-    top: 1070px;
+    top: 1040px;
     left: 390px;
 } */
 
