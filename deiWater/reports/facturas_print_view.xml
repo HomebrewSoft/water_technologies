@@ -69,6 +69,11 @@
                                 </div>
                                 <br/>
                                 <div class="row-ci">
+                                    Dir:
+                                    <span t-field="o.partner_id.street"/>
+                                </div>
+                                <br/>
+                                <div class="row-ci">
                                     RTN Cliente:
                                     <span t-field="o.partner_id.rtn"/>
                                 </div>
@@ -80,12 +85,13 @@
                                 </div>
                                 <br/>
                                 <div class="row-ci">
-                                Contacto:
-                            </div>
+                                    Contacto:
+                                </div>
                                 <br/>
                                 <div class="row-ci">
-                                E-mail:
-                            </div>
+                                    E-mail:
+                                    <span t-field="o.partner_id.email"/>
+                                </div>
                             </div>
                         </div>
 
@@ -134,11 +140,11 @@
                                 <th colspan="3">descripción</th>
                                 <th colspan="1">precio</th>
                                 <th colspan="1">unidad</th>
-                                <th colspan="1" style="font-size: 5px;">descuentos y rebajas</th>
+                                <th colspan="1">descuentos</th>
                                 <th colspan="1">total</th>
                                 <th colspan="1">isv</th>
                             </tr>
-                            <t t-set="emptySpace" t-value="450"/>
+                            <t t-set="emptySpace" t-value="490"/>
                             <tr t-foreach="o.invoice_line" t-as="l">
                                 <t t-set="emptySpace" t-value="emptySpace - 20"/>
                                 <t t-if="l.invoice_line_tax_id">

@@ -1,148 +1,233 @@
-* {
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    width: 100%;
-    padding: 10px;
-    vertical-align: top;
-    color: white;
-    background-color: white;
-}
-
-.container > .company-info {
-    width: 50%;
-    text-align: center;
+span {
+    position: fixed;
     font-size: 10px;
-    font-weight: bolder;
-    display: inline-block;
 }
 
-.logo-img {
-    width: 400px;
+/* client info */
+.cliente {
+    top: 70px;
+    left: 95px;
 }
 
-.container > .bill-info {
-    font-weight: bold;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: large;
-    width: 45%;
-    text-align: center;
-    display: inline-block;
+.rtn-cliente {
+    top: 118px;
+    left: 135px;
 }
 
-.header-footer {
-    width: 100%;
-    margin-left: 100px;
-    display: inline-block;
+.phone {
+    top: 70px;
+    left: 594px;
 }
 
-.header-footer > .bold {
-    padding-left: 10px;
-    padding-right: 10px;
-    text-align: center;
-    font-weight: bolder;
-    font-size: 8px;
-    width: 30%;
-    display: inline-block;
+.contacto {
+   top: 101px;
+   left: 603px;
 }
 
-.client-info {
-    width: 100%;
-    text-align: left;
-    font-weight: bold;
-    display: inline-block;
-    background-color: white;
+.e-mail {
+    top: 130px;
+    left: 580px;
 }
 
-.client-info > .col-ci {
-    width: 48%;
-    padding-left: 20px;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.client-info > .col-ci > .row-ci {
-    padding: 10px;
-    width: 100%;
-    display: inline-block;
-}
-
-.shadow {
-    -webkit-box-shadow: 4px 4px 0px 0px rgba(255,255,255, 1);
-    -moz-box-shadow: 4px 4px 0px 0px rgba(255,255,255, 1);
-    box-shadow: 4px 4px 0px 0px rgba(255,255,255, 1);
-}
-
-#mainTable {
-    width: 100%;
+/* table */
+.cell {
+    display: fixed;
     font-size: 10px;
-    border-collapse: separate;
-    background-color: white;
-    margin-top: 3px;
-}
-
-#mainTable th {
-    font-weight: bolder;
+    padding: 5px;
     text-align: center;
-    text-transform: uppercase;
-    vertical-align: middle;
-    padding: 2px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: white;
 }
 
-#mainTable td {
-    font-weight: normal;
+/* first part */
+.vendedor {
+    width: 189px;
+    height: 35px;
+    top: 200px;
+    left: 14px;
+}
+
+.or-compra {
+    width: 96px;
+    height: 35px;
+    top: 200px;
+    left: 203px;
+}
+
+.enviar-via {
+    width: 118px;
+    height: 35px;
+    top: 200px;
+    left: 299px;
+}
+
+.fecha-envio {
+    width: 162px;
+    height: 35px;
+    top: 200px;
+    left: 417px;
+}
+
+.terminos {
+    width: 148px;
+    height: 35px;
+    top: 200px;
+    left: 579px;
+}
+
+.fecha {
+    width: 94px;
+    height: 35px;
+    top: 200px;
+    left: 727px;
+}
+
+.pag {
+    width: 46px;
+    height: 35px;
+    top: 200px;
+    left: 821px;
+}
+
+/* second part */
+.articles {
+    width: 856px;
+    position: fixed;
+    top: 267px;
+    left: 16px;
     text-align: left;
     padding: 3px;
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-right-color: white;
-    word-wrap: break-word;
-}
-
-#mainTable td:last-child {
     border: none;
 }
 
-.first-table-header th {
-    border-right-style: solid;
-    border-right-width: 1px;
-    border-right-color: white;
+.articles tr {
+    display: inline-block !important;
+    height: 25px;
 }
 
-.second-table-header th {
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-top-color: white;
+.articles td {
+    word-wrap: break-word;
 }
 
-.table-footer {
-    border-top: 1px solid white !important;
+.articles span {
+    display: inline-block !important;
 }
 
+.ctd {
+    width: 88px;
+}
+
+.codigo {
+    width: 103px;
+}
+
+.descripcion {
+    width: 250px;
+}
+
+.precio {
+    width: 115px;
+}
+
+.unidad {
+    width: 66px;
+}
+
+.rebajas {
+    width: 66px;
+}
+
+.total {
+    width: 107px;
+}
+
+.isv {
+    width: 58px;
+}
+
+#subtotal {
+    display: fixed;
+    width: 110px;
+    top: 650px;
+    left: 665px;
+}
+
+/* pie de tabla */
+#exonerado {
+    display: fixed;
+    width: 165px;
+    height: 35px;
+    top: 675px;
+    left: 595px;
+}
+
+#exento {
+    display: fixed;
+    width: 165px;
+    height: 35px;
+    top: 710px;
+    left: 595px;
+}
+
+#gravado {
+    display: fixed;
+    width: 165px;
+    height: 35px;
+    top: 745px;
+    left: 595px;
+}
+
+#isv15 {
+    display: fixed;
+    width: 165px;
+    height: 35px;
+    top: 780px;
+    left: 595px;
+}
+
+#total-pagar {
+    display: fixed;
+    width: 165px;
+    height: 35px;
+    top: 815px;
+    left: 595px;
+}
+
+#total-letra {
+    display: fixed;
+    width: 400px;
+    height: 35px;
+    top: 845px;
+    left: 180px;
+}
+
+/* final */
 .end {
-    margin-top: 20px;
-    width: 100%;
+    display: fixed;
+    top: 890px;
+    left: 390px;
+}
+/* .fin-exenta {
+    width: 200px;
+    top: 1000px;
+    left: 390px;
 }
 
-.end .text {
-    font-weight: bold;
-    display: inline-block;
-    width: 40%;
+.fin-exonerado {
+    width: 200px;
+    top: 1035px;
+    left: 390px;
+}
+
+.fin-sag {
+    width: 200px;
+    top: 1070px;
+    left: 390px;
+} */
+
+/* otros */
+.txt-right {
+    text-align: right !important;
 }
 
 .txt-left {
-    text-align: left;
-}
-
-.txt-right {
-    text-align: right;
-}
-
-.invisible {
-    color: white;
+    text-align: left !important;
 }
