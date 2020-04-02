@@ -76,12 +76,8 @@
 
                         <!-- pie de tabla -->
                         <span id="exonerado" class="cell txt-right" t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
-                        <span id="exento" class="cell txt-right">
-                            <t t-esc="'{0:,.2f}'.format(exenta)" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
-                        </span>
-                        <span id="gravado" class="cell txt-right">
-                            <t t-esc="'{0:,.2f}'.format(gravado)" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
-                        </span>
+                        <span id="exento" class="cell txt-right" t-esc="'{0:,.2f}'.format(exenta)"/>
+                        <span id="gravado" class="cell txt-right" t-esc="'{0:,.2f}'.format(gravado)"/>
                         <span id="isv15" class="cell txt-right" t-field="o.amount_tax" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
                         <span id="total-pagar" class="cell txt-right" t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
                         <span id="total-letra" class="cell txt-left" t-field="o.amount_total_text"/>
