@@ -44,7 +44,7 @@
                                     <span t-field="o.company_id.company_registry"/>
                                 </div>
                                 <div class="bold">
-                                    Fecha de Vencimiento:
+                                    Fecha de Límite de Emisión:
                                     <span t-field="o.cai_expires_shot"/>
                                 </div>
                                 <div class="bold">
@@ -218,7 +218,7 @@
                                 <td class="table-footer" rowspan="5" colspan="5">
                                     <div style="text-align: center; width: 100%;">
                                         <div style="font-weight: bold; font-size: 7px; width: 100%; display: inline-block; ">
-                                            RECIBI LA MERCADERIA COMPLETA EN BUENAS CONICIONES POR EL CARACTER DE FACTURA CAMBIARIA, SEGUN EL CODIGO DE COMERCIO,
+                                            RECIBI LA MERCADERIA COMPLETA EN BUENAS CONDICIONES POR EL CARACTER DE FACTURA CAMBIARIA, SEGUN EL CODIGO DE COMERCIO,
                                             <br/>
                                             ACEPTO LAS CONDICIONES CONVENIDAS EN ESTA. EN CASO LA PARTE DEUDORA NO PAGUE EL VALOR DE LA MERCADERIA EN FECHA ACORDADA,
                                             <br/>
