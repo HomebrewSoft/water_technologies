@@ -12,8 +12,8 @@
                         <span class="cliente" t-field="o.partner_id.name"/>
                         <span class="rtn-cliente" t-field="o.partner_id.rtn"/>
                         <span class="phone" t-field="o.partner_id.phone"/>
-                        <span class="contacto">/* contacto */</span>
-                        <span class="e-mail">/* e-mail */</span>
+                        <span class="contacto"></span>
+                        <span class="e-mail" t-field="o.partner_id.email"/>
 
                         <!-- first part of table -->
                         <span class="cell vendedor" t-field="o.user_id.name"/>
