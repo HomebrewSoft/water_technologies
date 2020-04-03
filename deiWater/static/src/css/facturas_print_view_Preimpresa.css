@@ -201,27 +201,16 @@ span {
 
 /* final */
 .end {
-    display: fixed;
-    top: 860px;
-    left: 390px;
-}
-/* .fin-exenta {
-    width: 200px;
-    top: 970px;
-    left: 390px;
+    display: inline-block;
+    width: 100%;
+    margin-top: 885px;
 }
 
-.fin-exonerado {
-    width: 200px;
-    top: 1005px;
-    left: 390px;
+.end > .number {
+    width: 100%;
+    height: 25px;
+    padding-right: 90px;
 }
-
-.fin-sag {
-    width: 200px;
-    top: 1040px;
-    left: 390px;
-} */
 
 /* otros */
 .txt-right {

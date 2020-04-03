@@ -83,17 +83,9 @@
                         <span id="total-letra" class="cell txt-left" t-field="o.amount_total_text"/>
 
                         <div class="end">
-                            <div class="text invisible" style="font-size: 16px;">Datos del adquiriente exonerado</div>
-                            <br/>
-                            <div class="text invisible">Número correlativo de la orden de compra:</div>
-                            <span style="width:50%; border-bottom: 1px solid white; display: inline-block;" t-field="o.numero_orden_exenta"/>
-                            <br/>
-                            <div class="text invisible">Número correlativo delregistro de exonerado:</div>
-                            <span style="width:50%; border-bottom: 1px solid white; display: inline-block;" t-field="o.numero_correlativo_constancia_exonerado"/>
-                            <br/>
-                            <div class="text invisible">Número identificativo de la SAG:</div>
-                            <span style="width:50%; border-bottom: 1px solid white; display: inline-block;" t-field="o.numero_identificacion_sag"/>
-                            <br/>
+                            <span class="number txt-right" t-field="o.numero_orden_exenta"></span>
+                            <span class="number txt-right" style="margin-top: 25px;" t-field="o.numero_correlativo_constancia_exonerado"></span>
+                            <span class="number txt-right" style="margin-top: 50px;" t-field="o.numero_identificacion_sag"></span>
                         </div>
 
                     </div>
