@@ -195,7 +195,7 @@ span {
     display: fixed;
     width: 400px;
     height: 35px;
-    top: 815px;
+    top: 810px;
     left: 180px;
 }
 
@@ -203,7 +203,7 @@ span {
 .end {
     display: inline-block;
     width: 100%;
-    margin-top: 885px;
+    margin-top: 910px;
 }
 
 .end > .number {
